@@ -7,12 +7,23 @@ Items:
     Item:
       material: "DIAMOND_PICKAXE" # The items material (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
       name: "&eSpeed Pickaxe" # The items name
-      data-key: "speed_pickaxe" # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
+      # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
+      # MUST be formatted plugin-name:data-key.
+      data-key: "itemactions:speed_pickaxe"
+      # The data value type
+      # Currently supports: INTEGER, STRING and DOUBLE
+      data-type: "STRING"
+      # The value of the data
+      # Must match the data-type field, for example INTEGER must be an integer.
+      # You still must make below value a string though, so even if it's an integer it would still be "1"
+      data-value: "1"
     Requirements:
-      action-type: "RIGHT_CLICK_AIR" # The actual action required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
+      # The actual actions required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
+      action-types:
+        - "RIGHT_CLICK_AIR"
       permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
     Actions:
-      play-sound: "BLOCK_ANVIL_HIT" # Plays a sound to the player when the action is ran (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
+      action-sound: "BLOCK_ANVIL_HIT" # Plays a sound to the player when the action is ran (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
       player-commands: # Commands that will be ran by the player when the action is ran.
         - "say Must go FAST."
       console-commands: # Commands that will be ran by the console when the action is ran.
