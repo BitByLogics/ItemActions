@@ -2,10 +2,13 @@
 Items:
   SpeedPickaxe: # The name of the item action, can be anything
     Cooldown: 60 # The cooldown before they can run the action again, this is in seconds.
+    Bypass-Permission: "itemactions.speedpickaxe.bypass" # The permission to bypass the cooldown.
     # Any information under this must be matched for the action to run from the item.
     # It is recommended to just use the 'data-key' field for items, because it's the safest.
     Item:
-      material: "DIAMOND_PICKAXE" # The items material (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+      # A list of materials, if the item matches any it will be valid, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+      materials:
+        - "DIAMOND_PICKAXE"
       name: "&eSpeed Pickaxe" # The items name
       # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
       # MUST be formatted plugin-name:data-key.
