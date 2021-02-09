@@ -1,0 +1,13 @@
+# General Configuration
+Items:
+  SpeedPickaxe: # The name of the item action, can be anything
+    Cooldown: 60 # The cooldown before they can run the action again, this is in seconds.
+    Requirements:
+      action-type: "RIGHT_CLICK_AIR" # The actual action required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
+      permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
+    Actions:
+      play-sound: "BLOCK_ANVIL_HIT" # Plays a sound to the player when the action is ran (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
+      player-commands: # Commands that will be ran by the player when the action is ran.
+        - "say Must go FAST."
+      console-commands: # Commands that will be ran by the console when the action is ran.
+        - "effect give %player% minecraft:speed 30 1"
