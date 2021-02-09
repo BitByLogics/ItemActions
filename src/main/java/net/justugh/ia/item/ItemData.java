@@ -37,6 +37,7 @@ public class ItemData {
 
             namespaceData.apply(meta.getPersistentDataContainer());
             item.setItemMeta(meta);
+            items.add(item);
         });
 
         return items;

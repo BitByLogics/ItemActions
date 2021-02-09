@@ -3,6 +3,7 @@ package net.justugh.ia.item;
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
+import lombok.Getter;
 import net.justugh.ia.ItemActions;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -16,6 +17,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
+@Getter
 public class ItemManager {
 
     private final ItemActions plugin;
@@ -27,7 +29,7 @@ public class ItemManager {
         loadItems(plugin.getConfig());
     }
 
-    private void loadItems(FileConfiguration config) {
+    public void loadItems(FileConfiguration config) {
         items.clear();
 
         ConfigurationSection itemsSection = config.getConfigurationSection("Items");
@@ -50,7 +52,7 @@ public class ItemManager {
 
             List<Material> materials = Lists.newArrayList();
             itemSection.getStringList("Item.materials").forEach(materialName -> {
-                if(Arrays.stream(Material.values()).noneMatch(material -> material.name().equalsIgnoreCase(materialName))) {
+                if (Arrays.stream(Material.values()).noneMatch(material -> material.name().equalsIgnoreCase(materialName))) {
                     return;
                 }
 
