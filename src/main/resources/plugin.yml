@@ -1,0 +1,7 @@
+name: ItemActions
+version: ${project.version}
+main: net.justugh.ia.ItemActions
+api-version: 1.16
+authors: [Justugh]
+description: Give items a new purpose, simply.
+website: www.justugh.net
