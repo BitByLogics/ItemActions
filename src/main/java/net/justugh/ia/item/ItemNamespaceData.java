@@ -13,10 +13,18 @@ public class ItemNamespaceData {
     private final String value;
 
     public boolean matches(PersistentDataContainer container) {
+        if (data == null) {
+            return true;
+        }
+
         return container.has(getNamespacedKey(), getDataType());
     }
 
     public void apply(PersistentDataContainer container) {
+        if (type == null || value == null) {
+            return;
+        }
+
         switch (type.toLowerCase()) {
             case "double":
                 container.set(getNamespacedKey(), PersistentDataType.DOUBLE, Double.parseDouble(value));

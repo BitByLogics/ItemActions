@@ -16,21 +16,21 @@ public class ItemActionListener implements Listener {
 
     @EventHandler
     public void onInteract(PlayerInteractEvent event) {
-        if(event.getItem() == null) {
+        if (event.getItem() == null) {
             return;
         }
 
-        if(!itemManager.isActionItem(event.getItem())) {
+        if (!itemManager.isActionItem(event.getItem())) {
             return;
         }
 
         ActionItem actionItem = itemManager.getItem(event.getItem());
 
-        if(!event.getPlayer().hasPermission(actionItem.getRequirements().getPermission())) {
-           return;
+        if (actionItem.getRequirements().getPermission() != null && !event.getPlayer().hasPermission(actionItem.getRequirements().getPermission())) {
+            return;
         }
 
-        if(!actionItem.getRequirements().getActions().contains(event.getAction())) {
+        if (!actionItem.getRequirements().getActions().isEmpty() && !actionItem.getRequirements().getActions().contains(event.getAction())) {
             return;
         }
 
