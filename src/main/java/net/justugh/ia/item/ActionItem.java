@@ -11,6 +11,7 @@ public class ActionItem {
     private final ItemData data;
     private final ItemRequirementData requirements;
     private final ItemActionData actionData;
+    private final String bypassPermission;
     private final int cooldown;
 
 

@@ -1,38 +1,49 @@
 package net.justugh.ia.item;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.List;
+
 @Getter
 @Setter
 public class ItemData {
 
-    private Material material;
+    private List<Material> materials;
     private String name;
     private ItemNamespaceData namespaceData;
 
-    public ItemStack getItem() {
-        Preconditions.checkNotNull(material, "Cannot construct item with null material.");
+    public List<ItemStack> getItems() {
+        Preconditions.checkNotNull(materials, "Cannot construct item with null materials.");
 
-        ItemStack item = new ItemStack(material);
-        ItemMeta meta = item.getItemMeta();
+        List<ItemStack> items = Lists.newArrayList();
 
-        if (name != null) {
-            meta.setDisplayName(name);
+        if (materials.isEmpty()) {
+            return items;
         }
 
-        namespaceData.apply(meta.getPersistentDataContainer());
-        item.setItemMeta(meta);
+        materials.forEach(material -> {
+            ItemStack item = new ItemStack(material);
+            ItemMeta meta = item.getItemMeta();
 
-        return item;
+            if (name != null) {
+                meta.setDisplayName(name);
+            }
+
+            namespaceData.apply(meta.getPersistentDataContainer());
+            item.setItemMeta(meta);
+        });
+
+        return items;
     }
 
     public boolean matches(ItemStack item) {
-        if (material != null && item.getType() != material) {
+        if (!materials.isEmpty() && !materials.contains(item.getType())) {
             return false;
         }
 
