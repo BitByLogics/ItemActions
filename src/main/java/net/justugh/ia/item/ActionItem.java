@@ -5,6 +5,7 @@ import lombok.Getter;
 import net.justugh.ia.ItemActions;
 import net.justugh.ia.cooldown.CooldownData;
 import net.justugh.ia.cooldown.CooldownUtil;
+import net.justugh.ia.item.data.ItemDataInterface;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -14,7 +15,7 @@ import org.bukkit.entity.Player;
 public class ActionItem {
 
     private final String id;
-    private final ItemData data;
+    private final ItemDataInterface data;
     private final ItemRequirementData requirements;
     private final ItemActionData actionData;
     private final String bypassPermission;

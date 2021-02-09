@@ -5,6 +5,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import net.justugh.ia.ItemActions;
+import net.justugh.ia.item.data.ItemData;
+import net.justugh.ia.item.data.ItemDataInterface;
+import net.justugh.ia.item.data.ItemDataLegacy;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -48,8 +51,6 @@ public class ItemManager {
                 continue;
             }
 
-            ItemData itemData = new ItemData();
-
             List<Material> materials = Lists.newArrayList();
             itemSection.getStringList("Item.materials").forEach(materialName -> {
                 if (Arrays.stream(Material.values()).noneMatch(material -> material.name().equalsIgnoreCase(materialName))) {
@@ -60,15 +61,26 @@ public class ItemManager {
             });
             String name = itemSection.getString("Item.name");
 
-            String dataKey = itemSection.getString("Item.data-key");
-            String dataType = itemSection.getString("Item.data-type");
-            String dataValue = itemSection.getString("Item.data-value");
+            ItemDataInterface itemData = new ItemDataLegacy();
 
-            ItemNamespaceData namespaceData = new ItemNamespaceData(dataKey, dataType, dataValue);
+            // Temporary Fix, will improve later
+            try {
+                Class.forName("org.bukkit.persistence.PersistentDataContainer");
+
+                itemData = new ItemData();
+
+                String dataKey = itemSection.getString("Item.data-key");
+                String dataType = itemSection.getString("Item.data-type");
+                String dataValue = itemSection.getString("Item.data-value");
+
+                ItemNamespaceData namespaceData = new ItemNamespaceData(dataKey, dataType, dataValue);
+                ((ItemData) itemData).setNamespaceData(namespaceData);
+            } catch (Exception e) {
+                plugin.getLogger().warning("Server doesn't support Persistent Data, data-key will not work.");
+            }
 
             itemData.setMaterials(materials);
             itemData.setName(name == null ? null : ChatColor.translateAlternateColorCodes('&', name));
-            itemData.setNamespaceData(namespaceData);
 
             List<Action> actions = Lists.newArrayList();
             String permission = itemSection.getString("Requirements.permission");

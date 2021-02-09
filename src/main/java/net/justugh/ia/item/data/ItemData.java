@@ -1,10 +1,10 @@
-package net.justugh.ia.item;
+package net.justugh.ia.item.data;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import org.bukkit.Material;
+import net.justugh.ia.item.ItemNamespaceData;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -12,27 +12,26 @@ import java.util.List;
 
 @Getter
 @Setter
-public class ItemData {
+public class ItemData extends ItemDataInterface {
 
-    private List<Material> materials;
-    private String name;
     private ItemNamespaceData namespaceData;
 
+    @Override
     public List<ItemStack> getItems() {
-        Preconditions.checkNotNull(materials, "Cannot construct item with null materials.");
+        Preconditions.checkNotNull(getMaterials(), "Cannot construct item with null materials.");
 
         List<ItemStack> items = Lists.newArrayList();
 
-        if (materials.isEmpty()) {
+        if (getMaterials().isEmpty()) {
             return items;
         }
 
-        materials.forEach(material -> {
+        getMaterials().forEach(material -> {
             ItemStack item = new ItemStack(material);
             ItemMeta meta = item.getItemMeta();
 
-            if (name != null) {
-                meta.setDisplayName(name);
+            if (getName() != null) {
+                meta.setDisplayName(getName());
             }
 
             namespaceData.apply(meta.getPersistentDataContainer());
@@ -43,12 +42,13 @@ public class ItemData {
         return items;
     }
 
+    @Override
     public boolean matches(ItemStack item) {
-        if (!materials.isEmpty() && !materials.contains(item.getType())) {
+        if (!getMaterials().isEmpty() && !getMaterials().contains(item.getType())) {
             return false;
         }
 
-        if (name != null && !item.getItemMeta().getDisplayName().equalsIgnoreCase(name)) {
+        if (getName() != null && !item.getItemMeta().getDisplayName().equalsIgnoreCase(getName())) {
             return false;
         }
 
