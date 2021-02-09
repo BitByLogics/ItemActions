@@ -2,6 +2,12 @@
 Items:
   SpeedPickaxe: # The name of the item action, can be anything
     Cooldown: 60 # The cooldown before they can run the action again, this is in seconds.
+    # Any information under this must be matched for the action to run from the item.
+    # It is recommended to just use the 'data-key' field for items, because it's the safest.
+    Item:
+      material: "DIAMOND_PICKAXE" # The items material (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+      name: "&eSpeed Pickaxe" # The items name
+      data-key: "speed_pickaxe" # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
     Requirements:
       action-type: "RIGHT_CLICK_AIR" # The actual action required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
       permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
