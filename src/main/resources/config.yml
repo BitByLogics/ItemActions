@@ -1,3 +1,7 @@
+# Message Configuration
+Messages:
+  Cooldown-Message: "&cYou cannot use that action again yet!"
+
 # General Configuration
 Items:
   SpeedPickaxe: # The name of the item action, can be anything
