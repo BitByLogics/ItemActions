@@ -6,7 +6,7 @@
 
     <groupId>net.justugh</groupId>
     <artifactId>ItemActions</artifactId>
-    <version>2021.2</version>
+    <version>2021.2.1</version>
     <packaging>jar</packaging>
 
     <name>ItemActions</name>
@@ -33,18 +33,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
                 <version>3.2.4</version>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>co.aikar.commands</pattern>
-                            <shadedPattern>net.justugh.ia.lib.acf</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>co.aikar.locales</pattern>
-                            <shadedPattern>net.justugh.ia.lib.locales</shadedPattern>
-                        </relocation>
-                    </relocations>
-                </configuration>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -96,14 +84,6 @@
             <artifactId>lombok</artifactId>
             <version>1.18.16</version>
             <scope>provided</scope>
-        </dependency>
-
-        <!-- Aikar Command System -->
-        <dependency>
-            <groupId>co.aikar</groupId>
-            <artifactId>acf-paper</artifactId>
-            <version>0.5.0-SNAPSHOT</version>
-            <scope>compile</scope>
         </dependency>
     </dependencies>
 </project>
