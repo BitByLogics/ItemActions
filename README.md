@@ -16,35 +16,51 @@ Command | Description | Permission
 Default Item Configuration can be found here:
 ```yaml
 # General Configuration
-   Items:
-     SpeedPickaxe: # The name of the item action, can be anything
-       Cooldown: 60 # The cooldown before they can run the action again, this is in seconds.
-       Bypass-Permission: "itemactions.speedpickaxe.bypass" # The permission to bypass the cooldown.
-       # Any information under this must be matched for the action to run from the item.
-       # It is recommended to just use the 'data-key' field for items, because it's the safest.
-       Item:
-         # A list of materials, if the item matches any it will be valid, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
-         materials:
-           - "DIAMOND_PICKAXE"
-         name: "&eSpeed Pickaxe" # The items name
-         # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
-         # MUST be formatted plugin-name:data-key.
-         data-key: "itemactions:speed_pickaxe"
-         # The data value type
-         # Currently supports: INTEGER, STRING and DOUBLE
-         data-type: "STRING"
-         # The value of the data
-         # Must match the data-type field, for example INTEGER must be an integer.
-         # You still must make below value a string though, so even if it's an integer it would still be "1"
-         data-value: "1"
-       Requirements:
-         # The actual actions required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
-         action-types:
-           - "RIGHT_CLICK_AIR"
-         permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
-       Actions:
-         action-sound: "BLOCK_ANVIL_HIT" # Plays a sound to the player when the action is ran (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html)
-         player-commands: # Commands that will be ran by the player when the action is ran.
-           - "say Must go FAST."
-         console-commands: # Commands that will be ran by the console when the action is ran.
-           - "effect give %player% minecraft:speed 30 1"```
+Items:
+  SpeedPickaxe: # The name of the item action, can be anything
+    Type: "INTERACT" # The type of action item this is. Valid Types: INTERACT, ARMOR
+    Cooldown: 60 # The cooldown before they can run the action again, this is in seconds.
+    Bypass-Permission: "itemactions.speedpickaxe.bypass" # The permission to bypass the cooldown.
+    # Any information under this must be matched for the action to run from the item.
+    # It is recommended to just use the 'data-key' field for items, because it's the safest.
+    Item:
+      # A list of materials, if the item matches any it will be valid, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+      materials:
+        - "DIAMOND_PICKAXE"
+      name: "&eSpeed Pickaxe" # The items name
+      # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
+      # MUST be formatted plugin-name:data-key.
+      data-key: "itemactions:speed_pickaxe"
+      # The data value type
+      # Currently supports: INTEGER, STRING and DOUBLE
+      data-type: "STRING"
+      # The value of the data
+      # Must match the data-type field, for example INTEGER must be an integer.
+      # You still must make below value a string though, so even if it's an integer it would still be "1"
+      data-value: "1"
+    Requirements:
+      # The actual actions required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
+      action-types:
+        - "RIGHT_CLICK_AIR"
+      permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
+    Actions: # Item actions,
+      - "PLAY_SOUND:BLOCK_ANVIL_HIT"
+      - "RUN_COMMAND:say Must go FAST."
+      - "ADD_POTION_EFFECT:speed|3|true|true"
+  ZoomyBoots: # Armor example item, applies speed and negates fall damage when equipped.
+    Type: "ARMOR"
+    Item:
+      materials:
+        - "LEATHER_BOOTS"
+      name: "&eZoomy Boots"
+      dye-color: "#FF0000"
+      data-key: "itemactions:zoomy_boots"
+      data-type: "STRING"
+      data-value: "1"
+    Actions:
+      - "ADD_POTION_EFFECT:speed|3|true|true"
+      - "RUN_COMMAND:say Zoomy Boots Equipped."
+      - "NEGATE_FALL_DAMAGE"
+    Unequip-Actions:
+      - "REMOVE_POTION_EFFECT:speed"
+      - "RUN_COMMAND:say Zoomy Boots Removed."
