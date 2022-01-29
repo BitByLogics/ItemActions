@@ -2,42 +2,30 @@ package net.justugh.ia.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.justugh.ia.ItemActions;
-import net.justugh.ia.cooldown.CooldownData;
-import net.justugh.ia.cooldown.CooldownUtil;
+import net.justugh.ia.item.action.ItemAction;
+import net.justugh.ia.item.action.ItemActionType;
 import net.justugh.ia.item.data.ItemDataInterface;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
+
+import java.util.Arrays;
+import java.util.List;
 
 @Getter
 @AllArgsConstructor
-public class ActionItem {
+public abstract class ActionItem {
 
     private final String id;
+    private final ActionItemType type;
     private final ItemDataInterface data;
-    private final ItemRequirementData requirements;
-    private final ItemActionData actionData;
-    private final String bypassPermission;
-    private final int cooldown;
+    private final String permission;
+    private final List<ItemAction> actions;
 
-    public void use(Player player) {
-        if (CooldownUtil.hasCooldown(id) && !player.hasPermission(bypassPermission)) {
-            player.sendMessage(ChatColor.translateAlternateColorCodes('&',
-                    ItemActions.getInstance().getConfig().getString("Messages.Cooldown-Message")));
-            return;
-        }
+    public boolean hasAction(ItemActionType type) {
+        return actions.stream().anyMatch(action -> action.getType() == type);
+    }
 
-        if (actionData.getActionSound() != null) {
-            player.playSound(player.getLocation(), actionData.getActionSound(), 1f, 1f);
-        }
-
-        actionData.getPlayerCommands().forEach(player::performCommand);
-        actionData.getConsoleCommands().forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("%player%", player.getName())));
-
-        if (!player.hasPermission(bypassPermission)) {
-            CooldownUtil.startCooldown(new CooldownData(player.getUniqueId(), id, null, cooldown));
-        }
+    public void executeActions(Player player) {
+        actions.forEach(action -> action.execute(player));
     }
 
 }

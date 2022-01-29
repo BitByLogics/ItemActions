@@ -2,10 +2,11 @@ name: ItemActions
 version: ${project.version}
 main: net.justugh.ia.ItemActions
 api-version: 1.16
-authors: [Justugh]
+authors: [ Justugh ]
+depend: [ JustAPI ]
 description: Give items a new purpose, simply.
 website: www.justugh.net
 commands:
   itemactions:
-    aliases: ["ia"]
+    aliases: [ "ia" ]
     description: "Reload the plugin or give players action items!"

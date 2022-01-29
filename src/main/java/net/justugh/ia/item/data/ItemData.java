@@ -4,9 +4,11 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import net.justugh.ia.item.ItemNamespaceData;
+import net.md_5.bungee.api.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
 
 import java.util.List;
 
@@ -36,6 +38,14 @@ public class ItemData extends ItemDataInterface {
 
             namespaceData.apply(meta.getPersistentDataContainer());
             item.setItemMeta(meta);
+
+            if(getDyeColor() != null && item.getType().name().startsWith("LEATHER_")) {
+                LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) item.getItemMeta();
+                java.awt.Color color = ChatColor.of(getDyeColor()).getColor();
+                leatherArmorMeta.setColor(Color.fromRGB(color.getRed(), color.getGreen(), color.getBlue()));
+                item.setItemMeta(leatherArmorMeta);
+            }
+
             items.add(item);
         });
 

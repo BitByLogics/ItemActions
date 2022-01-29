@@ -2,7 +2,7 @@ package net.justugh.ia;
 
 import lombok.Getter;
 import net.justugh.ia.command.ItemActionsCommand;
-import net.justugh.ia.item.ItemManager;
+import net.justugh.ia.item.manager.ItemManager;
 import net.justugh.ia.listener.ItemActionListener;
 import org.bukkit.plugin.java.JavaPlugin;
 

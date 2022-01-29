@@ -13,6 +13,7 @@ public abstract class ItemDataInterface {
 
     private List<Material> materials;
     private String name;
+    private String dyeColor;
 
     public abstract List<ItemStack> getItems();
 

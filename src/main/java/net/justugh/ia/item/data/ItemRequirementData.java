@@ -1,4 +1,4 @@
-package net.justugh.ia.item;
+package net.justugh.ia.item.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import java.util.List;
 @AllArgsConstructor
 public class ItemRequirementData {
 
-    private final List<Action> actions;
     private final String permission;
 
 }

@@ -1,4 +1,4 @@
-package net.justugh.ia.item;
+package net.justugh.ia.item.data;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

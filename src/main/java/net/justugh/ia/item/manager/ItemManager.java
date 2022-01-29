@@ -1,13 +1,18 @@
-package net.justugh.ia.item;
+package net.justugh.ia.item.manager;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Getter;
 import net.justugh.ia.ItemActions;
-import net.justugh.ia.item.data.ItemData;
-import net.justugh.ia.item.data.ItemDataInterface;
-import net.justugh.ia.item.data.ItemDataLegacy;
+import net.justugh.ia.item.ActionItem;
+import net.justugh.ia.item.ActionItemType;
+import net.justugh.ia.item.action.ItemAction;
+import net.justugh.ia.item.action.ItemActionType;
+import net.justugh.ia.item.armor.ArmorItem;
+import net.justugh.ia.item.data.*;
+import net.justugh.ia.item.interact.InteractionItem;
+import net.justugh.japi.util.RichTextUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -60,6 +65,7 @@ public class ItemManager {
                 materials.add(Material.valueOf(materialName.toUpperCase()));
             });
             String name = itemSection.getString("Item.name");
+            String dyeColor = itemSection.getString("Item.dye-color");
 
             ItemDataInterface itemData = new ItemDataLegacy();
 
@@ -81,32 +87,40 @@ public class ItemManager {
 
             itemData.setMaterials(materials);
             itemData.setName(name == null ? null : ChatColor.translateAlternateColorCodes('&', name));
+            itemData.setDyeColor(dyeColor);
 
-            List<Action> actions = Lists.newArrayList();
+            ActionItemType itemType = ActionItemType.valueOf(itemSection.getString("Type", "INTERACT"));
+
             String permission = itemSection.getString("Requirements.permission");
-            itemSection.getStringList("Requirements.action-types").forEach(actionName -> {
-                if (Arrays.stream(Action.values()).noneMatch(action -> action.name().equalsIgnoreCase(actionName))) {
-                    plugin.getLogger().warning("Invalid action '" + actionName + "', skipping.");
-                    return;
-                }
-
-                actions.add(Action.valueOf(actionName.toUpperCase()));
+            List<ItemAction> actions = Lists.newArrayList();
+            itemSection.getStringList("Actions").forEach(action -> {
+                String[] data = action.split(":");
+                actions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[] {}));
             });
 
-            ItemRequirementData requirementData = new ItemRequirementData(actions, permission);
+            switch (itemType) {
+                case ARMOR:
+                    List<ItemAction> uneqipActions = Lists.newArrayList();
+                    itemSection.getStringList("Unequip-Actions").forEach(action -> {
+                        String[] data = action.split(":");
+                        uneqipActions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[] {}));
+                    });
+                    items.add(new ArmorItem(id, itemType, itemData, permission, actions, uneqipActions));
+                    continue;
+                default:
+                case INTERACT:
+                    List<Action> interactActions = Lists.newArrayList();
+                    itemSection.getStringList("Requirements.action-types").forEach(actionName -> {
+                        if (Arrays.stream(Action.values()).noneMatch(action -> action.name().equalsIgnoreCase(actionName))) {
+                            plugin.getLogger().warning("Invalid action '" + actionName + "', skipping.");
+                            return;
+                        }
 
-            String actionSoundName = itemSection.getString("Actions.action-sound");
-            List<String> playerCommands = itemSection.getStringList("Actions.player-commands");
-            List<String> consoleCommands = itemSection.getStringList("Actions.console-commands");
-
-            Sound actionSound = (actionSoundName == null
-                    || Arrays.stream(Sound.values()).noneMatch(sound ->
-                    sound.name().equalsIgnoreCase(actionSoundName)))
-                    ? null : Sound.valueOf(actionSoundName.toUpperCase());
-
-            ItemActionData actionData = new ItemActionData(actionSound, playerCommands, consoleCommands);
-
-            items.add(new ActionItem(id, itemData, requirementData, actionData, itemSection.getString("Bypass-Permission"), itemSection.getInt("Cooldown", 0)));
+                        interactActions.add(Action.valueOf(actionName.toUpperCase()));
+                    });
+                    items.add(new InteractionItem(id, itemType, itemData, permission, actions, interactActions, itemSection.getString("Bypass-Permission"), itemSection.getInt("Cooldown", 0)));
+                    return;
+            }
         }
 
         plugin.getLogger().info("Loaded " + items.size() + " action items from the configuration!");
