@@ -6,7 +6,7 @@
 
     <groupId>net.justugh</groupId>
     <artifactId>ItemActions</artifactId>
-    <version>2021.2.1</version>
+    <version>2022.1</version>
     <packaging>jar</packaging>
 
     <name>ItemActions</name>
