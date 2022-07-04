@@ -68,7 +68,7 @@ public class ItemActionsCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            plugin.getItemManager().getItem(args[2]).getData().getItems().forEach(item -> target.getInventory().addItem(item));
+            target.getInventory().addItem(plugin.getItemManager().getItem(args[2]).getData().getItem());
             sender.sendMessage("§aSuccessfully gave §e" + target.getName() + " §athe §e" + args[2] + " §aAction Item(s)!");
         }
 

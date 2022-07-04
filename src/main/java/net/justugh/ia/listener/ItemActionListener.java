@@ -77,7 +77,7 @@ public class ItemActionListener implements Listener {
             return;
         }
 
-        actionItem.executeActions(event.getPlayer());
+        interactionItem.interact(event.getPlayer());
     }
 
     @EventHandler

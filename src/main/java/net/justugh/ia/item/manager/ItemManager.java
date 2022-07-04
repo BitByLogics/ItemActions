@@ -12,15 +12,17 @@ import net.justugh.ia.item.action.ItemActionType;
 import net.justugh.ia.item.armor.ArmorItem;
 import net.justugh.ia.item.data.*;
 import net.justugh.ia.item.interact.InteractionItem;
+import net.justugh.japi.util.Format;
+import net.justugh.japi.util.ItemStackUtil;
 import net.justugh.japi.util.RichTextUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -56,18 +58,9 @@ public class ItemManager {
                 continue;
             }
 
-            List<Material> materials = Lists.newArrayList();
-            itemSection.getStringList("Item.materials").forEach(materialName -> {
-                if (Arrays.stream(Material.values()).noneMatch(material -> material.name().equalsIgnoreCase(materialName))) {
-                    return;
-                }
-
-                materials.add(Material.valueOf(materialName.toUpperCase()));
-            });
-            String name = itemSection.getString("Item.name");
-            String dyeColor = itemSection.getString("Item.dye-color");
-
             ItemDataInterface itemData = new ItemDataLegacy();
+
+            itemData.setItem(ItemStackUtil.getItemStackFromConfig(itemSection.getConfigurationSection("Item")));
 
             // Temporary Fix, will improve later
             try {
@@ -80,14 +73,12 @@ public class ItemManager {
                 String dataValue = itemSection.getString("Item.data-value");
 
                 ItemNamespaceData namespaceData = new ItemNamespaceData(dataKey, dataType, dataValue);
+                itemData.setItem(ItemStackUtil.getItemStackFromConfig(itemSection.getConfigurationSection("Item")));
+                itemData.getItem().setItemMeta(namespaceData.apply(itemData.getItem().getItemMeta()));
                 ((ItemData) itemData).setNamespaceData(namespaceData);
             } catch (Exception e) {
                 plugin.getLogger().warning("Server doesn't support Persistent Data, data-key will not work.");
             }
-
-            itemData.setMaterials(materials);
-            itemData.setName(name == null ? null : ChatColor.translateAlternateColorCodes('&', name));
-            itemData.setDyeColor(dyeColor);
 
             ActionItemType itemType = ActionItemType.valueOf(itemSection.getString("Type", "INTERACT"));
 
@@ -118,8 +109,8 @@ public class ItemManager {
 
                         interactActions.add(Action.valueOf(actionName.toUpperCase()));
                     });
-                    items.add(new InteractionItem(id, itemType, itemData, permission, actions, interactActions, itemSection.getString("Bypass-Permission"), itemSection.getInt("Cooldown", 0)));
-                    return;
+                    items.add(new InteractionItem(id, itemType, itemData, permission, actions, interactActions, itemSection.getString("Bypass-Permission"), itemSection.getInt("Cooldown", 0), itemSection.getBoolean("Consume", false)));
+                    break;
             }
         }
 
@@ -135,7 +126,7 @@ public class ItemManager {
     }
 
     public boolean isActionItem(ItemStack itemStack) {
-        return items.stream().anyMatch(item -> item.getData().matches(itemStack));
+        return itemStack != null && items.stream().anyMatch(item -> item.getData().matches(itemStack));
     }
 
 }

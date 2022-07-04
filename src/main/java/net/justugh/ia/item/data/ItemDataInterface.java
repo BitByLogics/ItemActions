@@ -11,11 +11,7 @@ import java.util.List;
 @Setter
 public abstract class ItemDataInterface {
 
-    private List<Material> materials;
-    private String name;
-    private String dyeColor;
-
-    public abstract List<ItemStack> getItems();
+    private ItemStack item;
 
     public abstract boolean matches(ItemStack itemStack);
 

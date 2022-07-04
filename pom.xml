@@ -82,7 +82,7 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.22</version>
+            <version>1.18.24</version>
             <scope>provided</scope>
         </dependency>
 
@@ -90,7 +90,7 @@
         <dependency>
             <groupId>net.justugh</groupId>
             <artifactId>JustAPI-Spigot</artifactId>
-            <version>2021.10</version>
+            <version>2022.1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

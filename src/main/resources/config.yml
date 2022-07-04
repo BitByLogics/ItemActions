@@ -30,7 +30,7 @@ Items:
       action-types:
         - "RIGHT_CLICK_AIR"
       permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
-    Actions: # Item actions,
+    Actions: # Item actions, view valid actions on the wiki (https://wiki.justugh.net/resources/item-actions/actions)
       - "PLAY_SOUND:BLOCK_ANVIL_HIT"
       - "RUN_COMMAND:say Must go FAST."
       - "ADD_POTION_EFFECT:speed|3|true|true"
