@@ -1,9 +1,9 @@
-package net.justugh.ia;
+package net.bitbylogic.itemactions;
 
 import lombok.Getter;
-import net.justugh.ia.command.ItemActionsCommand;
-import net.justugh.ia.item.manager.ItemManager;
-import net.justugh.ia.listener.ItemActionListener;
+import net.bitbylogic.itemactions.command.ItemActionsCommand;
+import net.bitbylogic.itemactions.item.manager.ItemManager;
+import net.bitbylogic.itemactions.listener.ItemActionListener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter

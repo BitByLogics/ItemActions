@@ -1,15 +1,13 @@
-package net.justugh.ia.item.interact;
+package net.bitbylogic.itemactions.item.interact;
 
 import lombok.Getter;
-import net.justugh.ia.ItemActions;
-import net.justugh.ia.cooldown.CooldownData;
-import net.justugh.ia.cooldown.CooldownUtil;
-import net.justugh.ia.item.ActionItem;
-import net.justugh.ia.item.ActionItemType;
-import net.justugh.ia.item.action.ItemAction;
-import net.justugh.ia.item.data.ItemActionData;
-import net.justugh.ia.item.data.ItemDataInterface;
-import org.bukkit.Bukkit;
+import net.bitbylogic.itemactions.ItemActions;
+import net.bitbylogic.itemactions.cooldown.CooldownData;
+import net.bitbylogic.itemactions.cooldown.CooldownUtil;
+import net.bitbylogic.itemactions.item.ActionItem;
+import net.bitbylogic.itemactions.item.ActionItemType;
+import net.bitbylogic.itemactions.item.action.ItemAction;
+import net.bitbylogic.itemactions.item.data.ItemDataInterface;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

@@ -1,4 +1,4 @@
-package net.justugh.ia.item.action;
+package net.bitbylogic.itemactions.item.action;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

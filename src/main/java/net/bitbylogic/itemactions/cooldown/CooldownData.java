@@ -1,4 +1,4 @@
-package net.justugh.ia.cooldown;
+package net.bitbylogic.itemactions.cooldown;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

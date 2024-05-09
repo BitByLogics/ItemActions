@@ -4,26 +4,25 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>net.justugh</groupId>
+    <groupId>net.bitbylogic</groupId>
     <artifactId>ItemActions</artifactId>
-    <version>2022.1</version>
+    <version>2024.5</version>
     <packaging>jar</packaging>
 
     <name>ItemActions</name>
 
     <description>Give items a new purpose, simply.</description>
     <properties>
-        <java.version>1.8</java.version>
+        <java.version>16</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <url>www.justugh.net</url>
 
     <build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>3.13.0</version>
                 <configuration>
                     <source>${java.version}</source>
                     <target>${java.version}</target>
@@ -32,7 +31,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.5.0</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -61,12 +60,6 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-
-        <!-- Sona Repo -->
-        <repository>
-            <id>sonatype</id>
-            <url>https://oss.sonatype.org/content/groups/public/</url>
-        </repository>
     </repositories>
 
     <dependencies>
@@ -74,7 +67,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18.1-R0.1-SNAPSHOT</version>
+            <version>1.20.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -82,15 +75,15 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.24</version>
+            <version>1.18.32</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- JustAPI Spigot -->
+        <!-- APIByLogic Spigot -->
         <dependency>
-            <groupId>net.justugh</groupId>
-            <artifactId>JustAPI-Spigot</artifactId>
-            <version>2022.1</version>
+            <groupId>net.bitbylogic</groupId>
+            <artifactId>APIByLogic-Spigot</artifactId>
+            <version>2024.4</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

@@ -1,15 +1,15 @@
-package net.justugh.ia.listener;
+package net.bitbylogic.itemactions.listener;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.justugh.ia.ItemActions;
-import net.justugh.ia.item.ActionItem;
-import net.justugh.ia.item.ActionItemType;
-import net.justugh.ia.item.action.ItemActionType;
-import net.justugh.ia.item.armor.ArmorItem;
-import net.justugh.ia.item.interact.InteractionItem;
-import net.justugh.ia.item.manager.ItemManager;
-import net.justugh.japi.util.event.armor.ArmorEquipEvent;
+import net.bitbylogic.apibylogic.util.event.armor.ArmorEquipEvent;
+import net.bitbylogic.itemactions.ItemActions;
+import net.bitbylogic.itemactions.item.ActionItem;
+import net.bitbylogic.itemactions.item.ActionItemType;
+import net.bitbylogic.itemactions.item.action.ItemActionType;
+import net.bitbylogic.itemactions.item.armor.ArmorItem;
+import net.bitbylogic.itemactions.item.interact.InteractionItem;
+import net.bitbylogic.itemactions.item.manager.ItemManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;

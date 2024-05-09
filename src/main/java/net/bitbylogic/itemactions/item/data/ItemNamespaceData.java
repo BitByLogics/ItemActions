@@ -1,4 +1,4 @@
-package net.justugh.ia.item.data;
+package net.bitbylogic.itemactions.item.data;
 
 import lombok.AllArgsConstructor;
 import org.bukkit.NamespacedKey;

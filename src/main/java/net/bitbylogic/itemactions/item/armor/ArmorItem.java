@@ -1,10 +1,10 @@
-package net.justugh.ia.item.armor;
+package net.bitbylogic.itemactions.item.armor;
 
 import lombok.Getter;
-import net.justugh.ia.item.ActionItem;
-import net.justugh.ia.item.ActionItemType;
-import net.justugh.ia.item.action.ItemAction;
-import net.justugh.ia.item.data.ItemDataInterface;
+import net.bitbylogic.itemactions.item.ActionItem;
+import net.bitbylogic.itemactions.item.ActionItemType;
+import net.bitbylogic.itemactions.item.action.ItemAction;
+import net.bitbylogic.itemactions.item.data.ItemDataInterface;
 import org.bukkit.entity.Player;
 
 import java.util.List;

@@ -1,19 +1,9 @@
-package net.justugh.ia.item.data;
+package net.bitbylogic.itemactions.item.data;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
 import lombok.Getter;
 import lombok.Setter;
-import net.justugh.japi.util.Format;
-import net.justugh.japi.util.ItemStackUtil;
-import net.md_5.bungee.api.ChatColor;
-import org.bukkit.Color;
+import net.bitbylogic.apibylogic.util.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter

@@ -1,7 +1,7 @@
-package net.justugh.ia.command;
+package net.bitbylogic.itemactions.command;
 
 import com.google.common.collect.Lists;
-import net.justugh.ia.ItemActions;
+import net.bitbylogic.itemactions.ItemActions;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

@@ -1,6 +1,6 @@
-package net.justugh.ia.cooldown;
+package net.bitbylogic.itemactions.cooldown;
 
-import net.justugh.ia.ItemActions;
+import net.bitbylogic.itemactions.ItemActions;
 import org.bukkit.Bukkit;
 
 import java.util.ArrayList;

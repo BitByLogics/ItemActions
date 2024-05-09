@@ -1,13 +1,12 @@
-package net.justugh.ia.item;
+package net.bitbylogic.itemactions.item;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.justugh.ia.item.action.ItemAction;
-import net.justugh.ia.item.action.ItemActionType;
-import net.justugh.ia.item.data.ItemDataInterface;
+import net.bitbylogic.itemactions.item.action.ItemAction;
+import net.bitbylogic.itemactions.item.action.ItemActionType;
+import net.bitbylogic.itemactions.item.data.ItemDataInterface;
 import org.bukkit.entity.Player;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Getter
