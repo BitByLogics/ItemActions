@@ -3,4 +3,4 @@ ItemActions is a dynamic Minecraft plugin that puts the power in your hands, all
 
 ### [SPIGOT DOWNLOAD](https://www.spigotmc.org/resources/itemaction-give-items-a-new-purpose.88840/)
 
-### [WIKI](https://justugh.gitbook.io/bitbylogics-resources)
+### [WIKI](https://justugh.gitbook.io/bitbylogics-resources/resources/item-actions)
