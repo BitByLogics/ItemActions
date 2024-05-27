@@ -4,6 +4,7 @@ import lombok.Getter;
 import net.bitbylogic.itemactions.command.ItemActionsCommand;
 import net.bitbylogic.itemactions.item.manager.ItemManager;
 import net.bitbylogic.itemactions.listener.ItemActionListener;
+import org.bstats.bukkit.Metrics;
 import org.bukkit.plugin.java.JavaPlugin;
 
 @Getter
@@ -19,6 +20,8 @@ public class ItemActions extends JavaPlugin {
         instance = this;
 
         saveDefaultConfig();
+        new Metrics(this, 22038);
+
         itemManager = new ItemManager(this);
 
         ItemActionsCommand command = new ItemActionsCommand(this);
