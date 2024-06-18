@@ -7,7 +7,7 @@ import net.bitbylogic.itemactions.cooldown.CooldownUtil;
 import net.bitbylogic.itemactions.item.ActionItem;
 import net.bitbylogic.itemactions.item.ActionItemType;
 import net.bitbylogic.itemactions.item.action.ItemAction;
-import net.bitbylogic.itemactions.item.data.ItemDataInterface;
+import net.bitbylogic.itemactions.item.data.ItemData;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -24,7 +24,7 @@ public class InteractionItem extends ActionItem {
     private final int cooldown;
     private final boolean consume;
 
-    public InteractionItem(String id, ActionItemType type, ItemDataInterface data, String permission, List<ItemAction> actions, List<Action> interactActions, String bypassPermission, int cooldown, boolean consume) {
+    public InteractionItem(String id, ActionItemType type, ItemData data, String permission, List<ItemAction> actions, List<Action> interactActions, String bypassPermission, int cooldown, boolean consume) {
         super(id, type, data, permission, actions);
         this.interactActions = interactActions;
         this.bypassPermission = bypassPermission;

@@ -3,7 +3,7 @@ version: ${project.version}
 main: net.bitbylogic.itemactions.ItemActions
 api-version: 1.19
 authors: [ BitByLogic ]
-depend: [ APIByLogic ]
+softdepend: [ APIByLogic ]
 description: Give items a new purpose, simply.
 commands:
   itemactions:

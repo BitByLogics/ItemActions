@@ -13,7 +13,7 @@
 
     <description>Give items a new purpose, simply.</description>
     <properties>
-        <java.version>16</java.version>
+        <java.version>21</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -31,7 +31,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.0</version>
+                <version>3.5.3</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -89,7 +89,7 @@
         <dependency>
             <groupId>net.bitbylogic</groupId>
             <artifactId>APIByLogic-Spigot</artifactId>
-            <version>2024.4</version>
+            <version>2024.6</version>
             <scope>provided</scope>
         </dependency>
 

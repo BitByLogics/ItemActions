@@ -2,6 +2,7 @@ package net.bitbylogic.itemactions.command;
 
 import com.google.common.collect.Lists;
 import net.bitbylogic.itemactions.ItemActions;
+import net.bitbylogic.itemactions.item.ActionItem;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -63,12 +64,14 @@ public class ItemActionsCommand implements CommandExecutor, TabCompleter {
                 return true;
             }
 
-            if (plugin.getItemManager().getItem(args[2]) == null) {
+            ActionItem actionItem = plugin.getItemManager().getItem(args[2]);
+
+            if (actionItem == null) {
                 sender.sendMessage("§cInvalid Action Item.");
                 return true;
             }
 
-            target.getInventory().addItem(plugin.getItemManager().getItem(args[2]).getData().getItem());
+            actionItem.getData().getItems().forEach(target.getInventory()::addItem);
             sender.sendMessage("§aSuccessfully gave §e" + target.getName() + " §athe §e" + args[2] + " §aAction Item(s)!");
         }
 

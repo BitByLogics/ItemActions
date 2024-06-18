@@ -4,19 +4,18 @@ import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import lombok.Getter;
-import net.bitbylogic.apibylogic.util.ItemStackUtil;
 import net.bitbylogic.apibylogic.util.RichTextUtil;
+import net.bitbylogic.apibylogic.util.item.ItemStackUtil;
 import net.bitbylogic.itemactions.ItemActions;
-import net.bitbylogic.itemactions.item.data.ItemData;
-import net.bitbylogic.itemactions.item.data.ItemDataInterface;
-import net.bitbylogic.itemactions.item.data.ItemDataLegacy;
-import net.bitbylogic.itemactions.item.data.ItemNamespaceData;
-import net.bitbylogic.itemactions.item.interact.InteractionItem;
 import net.bitbylogic.itemactions.item.ActionItem;
 import net.bitbylogic.itemactions.item.ActionItemType;
 import net.bitbylogic.itemactions.item.action.ItemAction;
 import net.bitbylogic.itemactions.item.action.ItemActionType;
 import net.bitbylogic.itemactions.item.armor.ArmorItem;
+import net.bitbylogic.itemactions.item.data.ItemData;
+import net.bitbylogic.itemactions.item.data.ItemNamespaceData;
+import net.bitbylogic.itemactions.item.interact.InteractionItem;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.block.Action;
@@ -57,27 +56,22 @@ public class ItemManager {
                 continue;
             }
 
-            ItemDataInterface itemData = new ItemDataLegacy();
+            ItemData itemData = new ItemData();
 
-            itemData.setItem(ItemStackUtil.getItemStackFromConfig(itemSection.getConfigurationSection("Item")));
+            String dataKey = itemSection.getString("Item.data-key");
+            String dataType = itemSection.getString("Item.data-type");
+            String dataValue = itemSection.getString("Item.data-value");
 
-            // Temporary Fix, will improve later
-            try {
-                Class.forName("org.bukkit.persistence.PersistentDataContainer");
+            ItemNamespaceData namespaceData = new ItemNamespaceData(dataKey, dataType, dataValue);
 
-                itemData = new ItemData();
+            itemSection.getStringList("Item.materials").forEach(material -> {
+                ItemStack item = ItemStackUtil.getItemStackFromConfig(itemSection.getConfigurationSection("Item"));
+                item.setType(Material.valueOf(material));
+                item.setItemMeta(namespaceData.apply(item.getItemMeta()));
+                itemData.getItems().add(item);
+            });
 
-                String dataKey = itemSection.getString("Item.data-key");
-                String dataType = itemSection.getString("Item.data-type");
-                String dataValue = itemSection.getString("Item.data-value");
-
-                ItemNamespaceData namespaceData = new ItemNamespaceData(dataKey, dataType, dataValue);
-                itemData.setItem(ItemStackUtil.getItemStackFromConfig(itemSection.getConfigurationSection("Item")));
-                itemData.getItem().setItemMeta(namespaceData.apply(itemData.getItem().getItemMeta()));
-                ((ItemData) itemData).setNamespaceData(namespaceData);
-            } catch (Exception e) {
-                plugin.getLogger().warning("Server doesn't support Persistent Data, data-key will not work.");
-            }
+            itemData.setNamespaceData(namespaceData);
 
             ActionItemType itemType = ActionItemType.valueOf(itemSection.getString("Type", "INTERACT"));
 
@@ -85,7 +79,7 @@ public class ItemManager {
             List<ItemAction> actions = Lists.newArrayList();
             itemSection.getStringList("Actions").forEach(action -> {
                 String[] data = action.split(":");
-                actions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[] {}));
+                actions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[]{}));
             });
 
             switch (itemType) {
@@ -93,7 +87,7 @@ public class ItemManager {
                     List<ItemAction> uneqipActions = Lists.newArrayList();
                     itemSection.getStringList("Unequip-Actions").forEach(action -> {
                         String[] data = action.split(":");
-                        uneqipActions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[] {}));
+                        uneqipActions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[]{}));
                     });
                     items.add(new ArmorItem(id, itemType, itemData, permission, actions, uneqipActions));
                     continue;
