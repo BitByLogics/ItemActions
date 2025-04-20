@@ -2,33 +2,22 @@ package net.bitbylogic.itemactions.item.data;
 
 import lombok.Getter;
 import lombok.Setter;
-import net.bitbylogic.apibylogic.util.item.ItemStackUtil;
+import net.bitbylogic.utils.item.ItemStackUtil;
 import org.bukkit.inventory.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @Setter
 public class ItemData {
 
     private ItemNamespaceData namespaceData;
-    private List<ItemStack> items = new ArrayList<>();
+    private ItemStack item;
 
     public boolean matches(ItemStack item) {
-        for (ItemStack itemStack : items) {
-            if (!ItemStackUtil.isSimilar(itemStack, item, true, true, true)) {
-                continue;
-            }
-
-            if (namespaceData != null && !namespaceData.matches(item.getItemMeta().getPersistentDataContainer())) {
-                continue;
-            }
-
-            return true;
+        if (!ItemStackUtil.isSimilar(item, item, true, true, true)) {
+            return false;
         }
 
-        return false;
+        return namespaceData == null || namespaceData.matches(item.getItemMeta().getPersistentDataContainer());
     }
 
 }

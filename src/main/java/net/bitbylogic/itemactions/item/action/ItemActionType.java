@@ -2,8 +2,8 @@ package net.bitbylogic.itemactions.item.action;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import net.bitbylogic.apibylogic.util.StringUtil;
-import net.bitbylogic.apibylogic.util.message.Formatter;
+import net.bitbylogic.utils.StringUtil;
+import net.bitbylogic.utils.message.format.Formatter;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.potion.PotionEffect;
@@ -12,6 +12,7 @@ import org.bukkit.potion.PotionEffectType;
 @Getter
 @AllArgsConstructor
 public enum ItemActionType {
+
     ADD_POTION_EFFECT((player, args) -> {
         PotionEffectType potionEffectType = PotionEffectType.getByName(args[0]);
         int amplifier = Integer.parseInt(args[1]);

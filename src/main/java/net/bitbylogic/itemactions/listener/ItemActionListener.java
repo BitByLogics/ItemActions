@@ -2,7 +2,7 @@ package net.bitbylogic.itemactions.listener;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import net.bitbylogic.apibylogic.util.event.armor.ArmorEquipEvent;
+import com.jeff_media.armorequipevent.ArmorEquipEvent;
 import net.bitbylogic.itemactions.ItemActions;
 import net.bitbylogic.itemactions.item.ActionItem;
 import net.bitbylogic.itemactions.item.ActionItemType;
@@ -11,15 +11,23 @@ import net.bitbylogic.itemactions.item.armor.ArmorItem;
 import net.bitbylogic.itemactions.item.interact.InteractionItem;
 import net.bitbylogic.itemactions.item.manager.ItemManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.block.BlockState;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.util.HashMap;
 import java.util.List;
@@ -127,6 +135,42 @@ public class ItemActionListener implements Listener {
         items.remove(armorItem);
         equippedArmor.put(event.getPlayer().getUniqueId(), items);
     }
+
+    @EventHandler
+    public void onOpen(InventoryOpenEvent event) {
+        Inventory inventory = event.getInventory();
+        InventoryHolder holder = inventory.getHolder();
+
+        if (!(holder instanceof BlockState blockState) || !blockState.getType().isBlock()) {
+            return;
+        }
+
+        ItemStack[] contents = inventory.getContents();
+        for (int i = 0; i < contents.length; i++) {
+            ItemStack content = contents[i];
+            if (content == null || content.getType().isAir()) {
+                continue;
+            }
+
+            ActionItem actionItem = itemManager.getItem(content);
+            if (actionItem == null) {
+                continue;
+            }
+
+            ItemMeta meta = content.getItemMeta();
+            if (meta == null) continue;
+
+            PersistentDataContainer dataContainer = meta.getPersistentDataContainer();
+            String version = dataContainer.getOrDefault(itemManager.getVersionKey(), PersistentDataType.STRING, "-1");
+
+            if (version.equalsIgnoreCase(actionItem.getVersion())) {
+                continue;
+            }
+
+            inventory.setItem(i, actionItem.getData().getItem());
+        }
+    }
+
 
     @EventHandler
     public void onFall(EntityDamageEvent event) {

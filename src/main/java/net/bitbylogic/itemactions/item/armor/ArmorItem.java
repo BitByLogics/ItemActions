@@ -14,8 +14,8 @@ public class ArmorItem extends ActionItem {
 
     private final List<ItemAction> removeActions;
 
-    public ArmorItem(String id, ActionItemType type, ItemData data, String permission, List<ItemAction> actions, List<ItemAction> removeActions) {
-        super(id, type, data, permission, actions);
+    public ArmorItem(String id, ActionItemType type, ItemData data, String permission, String version, List<ItemAction> actions, List<ItemAction> removeActions) {
+        super(id, type, data, permission, version, actions);
         this.removeActions = removeActions;
     }
 

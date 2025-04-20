@@ -17,6 +17,7 @@ public abstract class ActionItem {
     private final ActionItemType type;
     private final ItemData data;
     private final String permission;
+    private final String version;
     private final List<ItemAction> actions;
 
     public boolean hasAction(ItemActionType type) {

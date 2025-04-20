@@ -8,42 +8,44 @@ Items:
     Type: "INTERACT" # The type of action item this is. Valid Types: INTERACT, ARMOR
     Cooldown: 60 # The cooldown before they can run the action again, this is in seconds.
     Bypass-Permission: "itemactions.speedpickaxe.bypass" # The permission to bypass the cooldown.
+    Version: 1 # Used for refresh logic
     # Any information under this must be matched for the action to run from the item.
     # It is recommended to just use the 'data-key' field for items, because it's the safest.
     Item:
-      # A list of materials, if the item matches any it will be valid, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
-      materials:
-        - "DIAMOND_PICKAXE"
-      name: "&eSpeed Pickaxe" # The items name
+      # The material of the item (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html)
+      Material: "DIAMOND_PICKAXE"
+      Name: "&eSpeed Pickaxe" # The items name
+      Lore: # The items lore
+        - "&cI am &oSpeed."
       # A custom key that can be added to any item/entity, learn more here (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/persistence/PersistentDataContainer.html)
       # MUST be formatted plugin-name:data-key.
-      data-key: "itemactions:speed_pickaxe"
+      Data-Key: "itemactions:speed_pickaxe"
       # The data value type
       # Currently supports: INTEGER, STRING and DOUBLE
-      data-type: "STRING"
+      Data-Type: "STRING"
       # The value of the data
       # Must match the data-type field, for example INTEGER must be an integer.
       # You still must make below value a string though, so even if it's an integer it would still be "1"
-      data-value: "1"
+      Data-Value: "1"
     Requirements:
       # The actual actions required to activate this item action (https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/event/block/Action.html)
-      action-types:
+      Action-Types:
         - "RIGHT_CLICK_AIR"
-      permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
+      Permission: "itemactions.speedpickaxe" # The permission required to use this action, can be removed if no permission is needed
     Actions: # Item actions, view valid actions on the wiki (https://wiki.justugh.net/resources/item-actions/actions)
       - "PLAY_SOUND:BLOCK_ANVIL_HIT"
       - "RUN_COMMAND:say Must go FAST."
       - "ADD_POTION_EFFECT:speed|3|true|true"
   ZoomyBoots: # Armor example item, applies speed and negates fall damage when equipped.
     Type: "ARMOR"
+    Version: 1 # Used for refresh logic
     Item:
-      materials:
-        - "LEATHER_BOOTS"
-      name: "&eZoomy Boots"
-      dye-color: "#FF0000"
-      data-key: "itemactions:zoomy_boots"
-      data-type: "STRING"
-      data-value: "1"
+      Material: "LEATHER_BOOTS"
+      Name: "&eZoomy Boots"
+      Dye-Color: "#FF0000"
+      Data-Key: "itemactions:zoomy_boots"
+      Data-Type: "STRING"
+      Data-Value: "1"
     Actions:
       - "ADD_POTION_EFFECT:speed|3|true|true"
       - "RUN_COMMAND:say Zoomy Boots Equipped."
@@ -51,3 +53,47 @@ Items:
     Unequip-Actions:
       - "REMOVE_POTION_EFFECT:speed"
       - "RUN_COMMAND:say Zoomy Boots Removed."
+
+# ────────────
+# Bit's Colors
+# ────────────
+Colors:
+  Separator: '#3B322C'
+  Primary: '#1E90FF'
+  Secondary: '#20B2AA'
+  Highlight: '#FAFAD2'
+  Error-Primary: '#DB162F'
+  Error-Secondary: '#E5383B'
+  Error-Highlight: '#621708'
+  Success-Primary: '#1DAB45'
+  Success-Secondary: '#1BC44B'
+  Success-Highlight: '#71EA93'
+
+# ────────────────
+# Bit's Formatting
+# ────────────────
+Formatting:
+  Patterns:
+    Format: <([a-zA-Z0-9 _]+)>(.*?)</\1>|<([a-zA-Z0-9 _]+)#(.*?)>(.*?)</\3>
+    Spigot-Hex: §x(§[a-fA-F0-9]){6}§r
+    Hex: '#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})'
+    Placeholder: '%.+?%'
+  Success: <c#success_primary>&l%prefix%</c> &8%dot% <c#success_secondary>%message%</c>
+  Paged:
+    Footer: '⤷ &7(Page: %current-page%/%pages%)'
+    Item: <c#separator>| » </c><c#highlight>%text%</c>
+    Invalid-Page: Invalid page!
+  Rich-Command:
+    Hover: <c#secondary>%description%</c>
+    Text: ' <c#primary>/%command%</c>'
+  List:
+    Header: <c#primary>&l%prefix%</c> &8%dot% <c#secondary>%info%</c>
+    Item: '&8| &8» <c#success_primary>%prefix%</c> &8%dot% <c#success_secondary>%message%</c>'
+  Dotted-Message: <c#success_primary>%prefix%</c> &8%dot% <c#success_secondary>%message%</c>
+  Symbols:
+    Dot: •
+    Right-Arrow: »
+  Main: <c#primary>&l%prefix%</c> &8%dot% <c#secondary>%message%</c>
+  Center-Pixels: 154
+  Command: ' <c#primary>/%command%</c> &8─ <c#secondary>%description%</c>'
+  Error: <c#error_primary>&l%prefix%</c> &8%dot% <c#error_secondary>%message%</c>

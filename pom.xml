@@ -6,7 +6,7 @@
 
     <groupId>net.bitbylogic</groupId>
     <artifactId>ItemActions</artifactId>
-    <version>2024.5</version>
+    <version>2025.4</version>
     <packaging>jar</packaging>
 
     <name>ItemActions</name>
@@ -44,7 +44,19 @@
                             <relocations>
                                 <relocation>
                                     <pattern>org.bstats</pattern>
-                                    <shadedPattern>net.bitbylogic.itemactions</shadedPattern>
+                                    <shadedPattern>net.bitbylogic.itemactions.libs.bstats</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>net.bitbylogic.utils</pattern>
+                                    <shadedPattern>net.bitbylogic.itemactions.lib.bitsutils</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.jeff_media.armorequipevent</pattern>
+                                    <shadedPattern>net.bitbylogic.itemactions.libs.armorequipevent</shadedPattern>
+                                </relocation>
+                                <relocation>
+                                    <pattern>com.jeff_media.updatechecker</pattern>
+                                    <shadedPattern>net.bitbylogic.itemactions.libs.updatechecker</shadedPattern>
                                 </relocation>
                             </relocations>
                         </configuration>
@@ -66,6 +78,18 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+
+        <!-- JitPack -->
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+
+        <!-- Update Checker -->
+        <repository>
+            <id>jeff-media-public</id>
+            <url>https://repo.jeff-media.com/public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -73,7 +97,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.4-R0.1-SNAPSHOT</version>
+            <version>1.21.4-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -81,22 +105,38 @@
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.18.32</version>
+            <version>1.18.34</version>
             <scope>provided</scope>
         </dependency>
 
-        <!-- APIByLogic Spigot -->
+        <!-- Armor Equip Event -->
+        <dependency>
+            <groupId>com.jeff-media</groupId>
+            <artifactId>armor-equip-event</artifactId>
+            <version>1.0.3</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Bit's Utils Bukkit -->
         <dependency>
             <groupId>net.bitbylogic</groupId>
-            <artifactId>APIByLogic-Spigot</artifactId>
-            <version>2024.6</version>
-            <scope>provided</scope>
+            <artifactId>bits-utils-bukkit</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
+        <!-- BStats -->
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- Update Checker -->
+        <dependency>
+            <groupId>com.jeff_media</groupId>
+            <artifactId>SpigotUpdateChecker</artifactId>
+            <version>3.0.4</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>

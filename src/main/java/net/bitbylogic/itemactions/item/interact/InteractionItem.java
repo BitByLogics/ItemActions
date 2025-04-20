@@ -24,8 +24,8 @@ public class InteractionItem extends ActionItem {
     private final int cooldown;
     private final boolean consume;
 
-    public InteractionItem(String id, ActionItemType type, ItemData data, String permission, List<ItemAction> actions, List<Action> interactActions, String bypassPermission, int cooldown, boolean consume) {
-        super(id, type, data, permission, actions);
+    public InteractionItem(String id, ActionItemType type, ItemData data, String permission, String version, List<ItemAction> actions, List<Action> interactActions, String bypassPermission, int cooldown, boolean consume) {
+        super(id, type, data, permission, version, actions);
         this.interactActions = interactActions;
         this.bypassPermission = bypassPermission;
         this.cooldown = cooldown;

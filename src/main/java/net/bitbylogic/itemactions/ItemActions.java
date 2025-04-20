@@ -1,19 +1,21 @@
 package net.bitbylogic.itemactions;
 
+import com.jeff_media.armorequipevent.ArmorEquipEvent;
+import com.jeff_media.updatechecker.UpdateCheckSource;
+import com.jeff_media.updatechecker.UpdateChecker;
+import com.jeff_media.updatechecker.UserAgentBuilder;
 import lombok.Getter;
-import net.bitbylogic.apibylogic.updatechecker.UpdateCheckSource;
-import net.bitbylogic.apibylogic.updatechecker.UpdateChecker;
-import net.bitbylogic.apibylogic.updatechecker.UserAgentBuilder;
-import net.bitbylogic.apibylogic.util.message.Formatter;
 import net.bitbylogic.itemactions.command.ItemActionsCommand;
 import net.bitbylogic.itemactions.item.manager.ItemManager;
 import net.bitbylogic.itemactions.listener.ItemActionListener;
+import net.bitbylogic.utils.message.BitColor;
+import net.bitbylogic.utils.message.format.Formatter;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.permissions.ServerOperator;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.List;
 
 @Getter
@@ -26,17 +28,13 @@ public class ItemActions extends JavaPlugin {
 
     @Override
     public void onEnable() {
-        if (!getServer().getPluginManager().isPluginEnabled("APIByLogic")) {
-            getServer().getPluginManager().disablePlugin(this);
-            getServer().getConsoleSender().sendMessage(
-                    ChatColor.translateAlternateColorCodes('&', "&8[&6Item Actions&8] &cItem Actions was disabled! Please download APIByLogic."),
-                    ChatColor.translateAlternateColorCodes('&', "&8[&6Item Actions&8] &ahttps://github.com/BitByLogics/APIByLogic/releases/tag/RELEASE")
-            );
-            return;
-        }
-
         instance = this;
         saveDefaultConfig();
+
+        ArmorEquipEvent.registerListener(this);
+
+        Formatter.registerConfig(new File(getDataFolder(), "config.yml"));
+        BitColor.loadColors(getConfig());
 
         new UpdateChecker(this, UpdateCheckSource.SPIGOT, "88840")
                 .setNotifyRequesters(false)
@@ -65,8 +63,7 @@ public class ItemActions extends JavaPlugin {
                     Bukkit.getConsoleSender().sendMessage(updateMessages.toArray(new String[]{}));
                     Bukkit.getOnlinePlayers().stream().filter(ServerOperator::isOp).forEach(player -> player.sendMessage(updateMessages.toArray(new String[]{})));
                 })
-                .onFail((commandSenders, e) -> {
-                }).checkNow();
+                .onFail((commandSenders, e) -> {}).checkNow();
 
         new Metrics(this, 22038);
 
