@@ -51,6 +51,7 @@ public class ItemActionListener implements Listener {
                 }
 
                 List<ActionItem> items = equippedArmor.get(uuid);
+                items.removeIf(actionItem -> !player.getInventory().getItem(actionItem.getData().getItem().getType().getEquipmentSlot()).isSimilar(actionItem.getData().getItem()));
 
                 items.stream().filter(item -> item.getActions().stream().anyMatch(action -> action.getType() == ItemActionType.ADD_POTION_EFFECT)).forEach(item -> {
                     item.getActions().stream().filter(action -> action.getType() == ItemActionType.ADD_POTION_EFFECT).forEach(action -> action.execute(player));

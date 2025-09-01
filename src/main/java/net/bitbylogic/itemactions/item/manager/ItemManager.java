@@ -2,7 +2,6 @@ package net.bitbylogic.itemactions.item.manager;
 
 import com.google.common.base.Preconditions;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
 import lombok.Getter;
 import net.bitbylogic.itemactions.ItemActions;
 import net.bitbylogic.itemactions.item.ActionItem;
@@ -16,6 +15,7 @@ import net.bitbylogic.itemactions.item.interact.InteractionItem;
 import net.bitbylogic.utils.RichTextUtil;
 import net.bitbylogic.utils.item.ItemStackUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -23,26 +23,28 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapedRecipe;
+import org.bukkit.inventory.ShapelessRecipe;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Getter
 public class ItemManager {
 
     private final ItemActions plugin;
     private final Set<ActionItem> items;
+    private final Set<NamespacedKey> recipes;
 
     private final NamespacedKey itemIdKey;
     private final NamespacedKey versionKey;
 
     public ItemManager(ItemActions plugin) {
         this.plugin = plugin;
-        items = Sets.newHashSet();
+        items = new HashSet<>();
+        recipes = new HashSet<>();
 
         this.itemIdKey = new NamespacedKey(plugin, "item_id");
         this.versionKey = new NamespacedKey(plugin, "item_version");
@@ -52,6 +54,8 @@ public class ItemManager {
 
     public void loadItems(FileConfiguration config) {
         items.clear();
+        recipes.forEach(Bukkit::removeRecipe);
+        recipes.clear();
 
         ConfigurationSection itemsSection = config.getConfigurationSection("Items");
         Preconditions.checkNotNull(itemsSection, "Items Section is null");
@@ -101,6 +105,47 @@ public class ItemManager {
                 String[] data = action.split(":");
                 actions.add(new ItemAction(ItemActionType.valueOf(data[0]), data.length > 1 ? RichTextUtil.getRichText(data, 1) : new String[]{}));
             });
+
+            ConfigurationSection recipeSection = itemSection.getConfigurationSection("Recipe");
+
+            if(recipeSection != null) {
+                NamespacedKey recipeKey = new NamespacedKey(plugin, id + "_recipe");
+                String recipeType = recipeSection.getString("Recipe-Type", "SHAPELESS");
+
+                switch (recipeType) {
+                    case "SHAPED":
+                        HashMap<Character, Material> shapedIngredients = new HashMap<>();
+
+                        recipeSection.getStringList("Ingredients").forEach(ingredient -> {
+                            String[] data = ingredient.split(":");
+                            shapedIngredients.put(data[0].charAt(0), Material.valueOf(data[1].toUpperCase()));
+                        });
+
+                        List<String> shape = recipeSection.getStringList("Shape");
+                        ShapedRecipe shapedRecipe = new ShapedRecipe(recipeKey, item).shape(shape.toArray(new String[]{}));
+                        shapedIngredients.forEach(shapedRecipe::setIngredient);
+
+                        recipes.add(recipeKey);
+                        Bukkit.addRecipe(shapedRecipe);
+                        break;
+                    case "SHAPELESS":
+                        HashMap<Integer, Material> shapelessIngredients = new HashMap<>();
+
+                        recipeSection.getStringList("Ingredients").forEach(ingredient -> {
+                            String[] data = ingredient.split(":");
+                            shapelessIngredients.put(Integer.valueOf(data[0]), Material.valueOf(data[1].toUpperCase()));
+                        });
+
+                        ShapelessRecipe shapelessRecipe = new ShapelessRecipe(recipeKey, item);
+                        shapelessIngredients.forEach(shapelessRecipe::addIngredient);
+
+                        recipes.add(recipeKey);
+                        Bukkit.addRecipe(shapelessRecipe);
+                        break;
+                    default:
+                        break;
+                }
+            }
 
             switch (itemType) {
                 case ARMOR:

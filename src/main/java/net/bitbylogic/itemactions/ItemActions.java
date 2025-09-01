@@ -79,7 +79,7 @@ public class ItemActions extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        itemManager.getRecipes().forEach(Bukkit::removeRecipe);
     }
 
 }

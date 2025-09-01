@@ -6,7 +6,7 @@
 
     <groupId>net.bitbylogic</groupId>
     <artifactId>ItemActions</artifactId>
-    <version>2025.4</version>
+    <version>2025.5</version>
     <packaging>jar</packaging>
 
     <name>ItemActions</name>
@@ -79,6 +79,11 @@
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
 
+        <repository>
+            <id>papermc</id>
+            <url>https://repo.papermc.io/repository/maven-public/</url>
+        </repository>
+
         <!-- JitPack -->
         <repository>
             <id>jitpack.io</id>
@@ -130,6 +135,22 @@
             <artifactId>bstats-bukkit</artifactId>
             <version>3.0.2</version>
             <scope>compile</scope>
+        </dependency>
+
+        <!-- JUnit -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.13.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- MockBukkit -->
+        <dependency>
+            <groupId>org.mockbukkit.mockbukkit</groupId>
+            <artifactId>mockbukkit-v1.21</artifactId>
+            <version>4.64.0</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- Update Checker -->
