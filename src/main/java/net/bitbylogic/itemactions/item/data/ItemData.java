@@ -13,7 +13,7 @@ public class ItemData {
     private ItemStack item;
 
     public boolean matches(ItemStack item) {
-        if (!ItemStackUtil.isSimilar(item, item, true, true, true)) {
+        if (item.getItemMeta() == null || !ItemStackUtil.isSimilar(item, item, true, true, true)) {
             return false;
         }
 
