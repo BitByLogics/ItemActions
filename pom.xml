@@ -6,7 +6,7 @@
 
     <groupId>net.bitbylogic</groupId>
     <artifactId>ItemActions</artifactId>
-    <version>2025.5</version>
+    <version>2025.11</version>
     <packaging>jar</packaging>
 
     <name>ItemActions</name>
