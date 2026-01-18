@@ -102,7 +102,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.21.4-R0.1-SNAPSHOT</version>
+            <version>1.21.11-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
 
@@ -124,9 +124,9 @@
 
         <!-- Bit's Utils Bukkit -->
         <dependency>
-            <groupId>net.bitbylogic</groupId>
+            <groupId>com.github.BitByLogics.Bits-Utils</groupId>
             <artifactId>bits-utils-bukkit</artifactId>
-            <version>1.0.0</version>
+            <version>b7bce2d2ac</version>
         </dependency>
 
         <!-- BStats -->
